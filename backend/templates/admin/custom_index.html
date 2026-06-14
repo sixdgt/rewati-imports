@@ -1,0 +1,304 @@
+{% extends "admin/index.html" %}
+
+{% load static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+    /* Hide Jazzmin Version Footer */
+    .app-footer .float-end { display: none !important; }
+
+    /* Interactive Cards */
+    .dashboard-card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        border-radius: 8px;
+        border: none;
+    }
+    .dashboard-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    }
+
+    /* Fallback UI */
+    .empty-state-box {
+        padding: 3rem 1rem;
+        text-align: center;
+        color: #6c757d;
+        background: #f8f9fa;
+        border: 2px dashed #dee2e6;
+        border-radius: 8px;
+        margin-top: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        min-height: 200px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="col-12">
+    <!-- Header with Live Clock -->
+    <div class="d-flex justify-content-between align-items-center mb-4 px-4">
+        <h2 class="mb-0">Dashboard</h2>
+        <div id="liveClock" class="text-muted fw-bold" style="font-size: 1.1rem; background: #fff; padding: 5px 15px; border-radius: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+            <!-- Populated via JS -->
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="row px-4">
+
+        <!-- Orders -->
+        <div class="col-md-3 mb-4">
+            <div class="card text-white bg-primary p-3 dashboard-card h-100">
+                <h5>Total Orders</h5>
+                <h3 class="mb-0">{{ total_orders }}</h3>
+            </div>
+        </div>
+
+        <!-- Revenue -->
+        <div class="col-md-3 mb-4">
+            <div class="card text-white bg-success p-3 dashboard-card h-100">
+                <h5>Total Revenue</h5>
+                <h3 class="mb-0">Rs. {{ total_revenue }}</h3>
+            </div>
+        </div>
+
+        <!-- Customers -->
+        <div class="col-md-3 mb-4">
+            <div class="card text-white bg-info p-3 dashboard-card h-100">
+                <h5>Total Customers</h5>
+                <h3 class="mb-0">{{ total_customers }}</h3>
+            </div>
+        </div>
+
+        <!-- Products -->
+        <div class="col-md-3 mb-4">
+            <div class="card text-white bg-dark p-3 dashboard-card h-100">
+                <h5>Total Products</h5>
+                <h3 class="mb-0">{{ total_products }}</h3>
+            </div>
+        </div>
+
+    </div>
+
+    <hr>
+
+    <div class="row mt-4 px-4">
+
+        <!-- Top Products -->
+        <div class="col-md-6 mb-4">
+            <div class="card p-3 h-100 dashboard-card">
+                <h5 class="mb-3">Top Selling Products</h5>
+                {% if has_top_products %}
+                    <canvas id="topProductsChart"></canvas>
+                {% else %}
+                    <div class="empty-state-box">
+                        <i class="fas fa-box-open fa-2x mb-2 text-muted"></i>
+                        <span>No top products data available</span>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Order Status -->
+        <div class="col-md-6 mb-4">
+            <div class="card p-3 h-100 dashboard-card">
+                <h5 class="mb-3">Order Status Distribution</h5>
+                {% if status_data != "[]" %}
+                    <canvas id="statusChart"></canvas>
+                {% else %}
+                    <div class="empty-state-box">
+                        <i class="fas fa-chart-pie fa-2x mb-2 text-muted"></i>
+                        <span>No order status data available</span>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row mt-4 px-4">
+        <!-- Orders (Last 7 Days) -->
+        <div class="col-md-6 mb-4">
+            <div class="card p-3 h-100 dashboard-card">
+                <h5 class="mb-3">Orders (Last 7 Days)</h5>
+                {% if has_orders_data %}
+                    <canvas id="ordersChart"></canvas>
+                {% else %}
+                    <div class="empty-state-box">
+                        <i class="fas fa-chart-line fa-2x mb-2 text-muted"></i>
+                        <span>No orders in the last 7 days</span>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Revenue (Last 7 Days) -->
+        <div class="col-md-6 mb-4">
+            <div class="card p-3 h-100 dashboard-card">
+                <h5 class="mb-3">Revenue (Last 7 Days)</h5>
+                {% if has_orders_data %}
+                    <canvas id="revenueChart"></canvas>
+                {% else %}
+                    <div class="empty-state-box">
+                        <i class="fas fa-coins fa-2x mb-2 text-muted"></i>
+                        <span>No revenue in the last 7 days</span>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{{ block.super }}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // --- LIVE CLOCK ---
+        const clockEl = document.getElementById('liveClock');
+        function updateClock() {
+            const now = new Date();
+            const options = { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true };
+            // Example format: May 9, 2026 | 2:45 PM
+            const formattedDate = now.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+            const formattedTime = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+            clockEl.textContent = `${formattedDate} | ${formattedTime}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock(); // Initial call
+
+        // --- CHART JS CONFIGURATION ---
+        const commonOptions = {
+            responsive: true,
+            animation: {
+                duration: 1000,
+                easing: 'easeOutQuart'
+            },
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        padding: 20,
+                        font: { family: "'Source Sans Pro', sans-serif", size: 13 }
+                    }
+                },
+                tooltip: {
+                    enabled: true,
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    titleFont: { size: 14, family: "'Source Sans Pro', sans-serif" },
+                    bodyFont: { size: 13, family: "'Source Sans Pro', sans-serif" },
+                    padding: 12,
+                    cornerRadius: 8,
+                }
+            }
+        };
+
+        // Top Products Chart
+        {% if has_top_products %}
+        new Chart(document.getElementById('topProductsChart'), {
+            type: 'bar',
+            data: {
+                labels: {{ top_product_labels|safe }},
+                datasets: [{
+                    label: 'Units Sold',
+                    data: {{ top_product_data|safe }},
+                    backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1,
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                ...commonOptions,
+                scales: {
+                    y: { beginAtZero: true, ticks: { precision: 0 } }
+                }
+            }
+        });
+        {% endif %}
+
+        // Order Status Pie Chart
+        {% if status_data != "[]" %}
+        new Chart(document.getElementById('statusChart'), {
+            type: 'doughnut', // Doughnut looks slightly more modern than pie
+            data: {
+                labels: {{ status_labels|safe }},
+                datasets: [{
+                    data: {{ status_data|safe }},
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.7)',
+                        'rgba(54, 162, 235, 0.7)',
+                        'rgba(255, 206, 86, 0.7)',
+                        'rgba(75, 192, 192, 0.7)',
+                        'rgba(153, 102, 255, 0.7)'
+                    ],
+                    borderWidth: 2,
+                    hoverOffset: 5
+                }]
+            },
+            options: {
+                ...commonOptions,
+                cutout: '60%' // Doughnut hole size
+            }
+        });
+        {% endif %}
+
+        // Orders & Revenue Charts
+        {% if has_orders_data %}
+        const labels = {{ chart_labels|safe }};
+        
+        new Chart(document.getElementById('ordersChart'), {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Orders',
+                    data: {{ orders_data|safe }},
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.3, // Smooth curve
+                    pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+                    pointRadius: 4,
+                    pointHoverRadius: 6
+                }]
+            },
+            options: {
+                ...commonOptions,
+                scales: {
+                    y: { beginAtZero: true, ticks: { precision: 0 } }
+                }
+            }
+        });
+
+        new Chart(document.getElementById('revenueChart'), {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Revenue (Rs)',
+                    data: {{ revenue_data|safe }},
+                    backgroundColor: 'rgba(40, 167, 69, 0.7)',
+                    borderColor: 'rgba(40, 167, 69, 1)',
+                    borderWidth: 1,
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                ...commonOptions,
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+        {% endif %}
+    });
+</script>
+
+{% endblock %}

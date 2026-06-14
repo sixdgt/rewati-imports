@@ -1,0 +1,208 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #48A111;
+  --color-secondary: #57595B;
+}
+
+::-webkit-scrollbar {
+  width: 8px !important;
+  height: 8px !important;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary) !important;
+}
+
+::-webkit-scrollbar-track {
+  background: #fff !important;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.container {
+  width: 96%;
+  margin: auto;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: var(--color-primary) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px !important;
+  height: 50px !important;
+  border-radius: 100% !important;
+  background-color: #fff !important;
+  transition: background-color 0.3s ease;
+  border: 1px solid var(--color-primary) !important;
+}
+
+.swiper-button-next svg,
+.swiper-button-prev svg {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background-color: var(--color-primary) !important;
+  color: #fff !important;
+}
+
+.swiper-button-next:hover svg,
+.swiper-button-prev:hover svg {
+  color: #fff !important;
+}
+
+.MuiTabs-list button {
+  font-weight: 600 !important;
+}
+
+.MuiTabs-list .Mui-selected {
+  @apply text-primary!;
+}
+
+.MuiTabs-indicator {
+  background-color: var(--color-primary) !important;
+}
+
+.MuiTabScrollButton-root svg {
+  font-size: 20px !important;
+  width: 20px !important;
+  height: 20px !important;
+}
+
+.btn-border-g {
+  border: 1px solid var(--color-primary) !important;
+  font-weight: 600 !important;
+  color: var(--color-primary) !important;
+}
+
+.btn-border-g:hover {
+  background-color: var(--color-primary) !important;
+  color: #fff !important;
+}
+
+.scrollbar-custom::-webkit-scrollbar {
+  height: 6px;
+}
+
+/* MUI TextField Dynamic Border Colors */
+.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: var(--color-secondary) !important;
+}
+
+.MuiInputLabel-root.Mui-focused {
+  color: var(--color-secondary) !important;
+}
+
+.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: var(--color-secondary) !important;
+}
+
+.scrollbar-custom::-webkit-scrollbar-track {
+  background: #e5e5e5;
+  border-radius: 10px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 10px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary) !important;
+}
+
+.social-icon {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+  transition: all 0.3s ease;
+  border: 1px solid #ddd;
+}
+
+.social-icon:hover {
+  background: var(--color-primary);
+  color: white;
+  transform: translateY(-3px);
+}
+
+.scroll::-webkit-scrollbar-thumbP {
+  background: #ccc !important;
+}
+
+.MuiFormGroup-root .MuiTypography-root {
+  font-size: 14px !important;
+}
+
+.MuiFormGroup-root .Mui-checked .MuiSvgIcon-root {
+  color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+}
+
+.Mui-checked .MuiSvgIcon-root {
+  fill: var(--color-primary) !important;
+}
+
+.MuiFormGroup-root .MuiFormControlLabel-root .MuiCheckbox-root {
+  padding: 5px !important;
+  padding-left: 10px !important;
+}
+
+.MuiCheckbox-root {
+  padding: 5px !important;
+  padding-left: 10px !important;
+}
+
+.ratingFilter .MuiCheckbox-root {
+  padding-left: 0px !important;
+}
+
+.ReactCollapse--collapse {
+  transition: height 300ms;
+}
+
+.range-slider {
+  height: 5px !important;
+}
+
+.range-slider .range-slider__thumb,
+.range-slider .range-slider__range {
+  @apply bg-primary! border! border-primary!;
+}
+
+.range-slider .range-slider__thumb {
+  width: 0.9rem !important;
+  height: 0.9rem !important;
+}
+
+.MuiList-root li {
+  font-size: 13px !important;
+  color: var(--color-primary) !important;
+}
+
+.MuiPaginationItem-circular.Mui-selected {
+  background-color: var(--color-primary) !important;
+  color: #fff !important;
+}
+
+#qtyDrop .MuiList-root {
+  max-height: 150px !important;
+  overflow-y: scroll !important;
+}
