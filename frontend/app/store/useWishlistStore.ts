@@ -22,9 +22,12 @@ export const useWishlistStore = create<WishlistState>()(
         set({ loading: true });
         try {
           const res = await api.get('/wishlist/');
-          set({ items: res.data });
+          // Handle both paginated { results: [] } and plain array responses
+          const items = Array.isArray(res.data) ? res.data : (res.data.results ?? []);
+          set({ items });
         } catch (err) {
           console.error('Failed to fetch wishlist', err);
+          set({ items: [] }); // Prevent stale non-array state on error
         } finally {
           set({ loading: false });
         }

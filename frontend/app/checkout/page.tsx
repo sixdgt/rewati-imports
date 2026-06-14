@@ -6,6 +6,7 @@ import { useCartStore } from '../store/useCartStore';
 import { useAuthStore } from '../store/useAuthStore';
 import api from '../lib/api';
 import { useRouter } from 'next/navigation';
+import { SiStripe } from 'react-icons/si';
 
 export default function CheckoutPage() {
   const { items, getSubtotal, clearCart } = useCartStore();
@@ -19,7 +20,7 @@ export default function CheckoutPage() {
     address: '',
     city: '',
     zip_code: '',
-    payment_method: 'COD'
+    payment_method: 'STRIPE'
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -194,8 +195,8 @@ export default function CheckoutPage() {
                 <FormControl component="fieldset">
                   <FormLabel component="legend" sx={{ fontWeight: 'bold', color: 'black' }}>Payment Method</FormLabel>
                   <RadioGroup name="payment_method" value={formData.payment_method} onChange={handleChange}>
-                    <FormControlLabel value="COD" control={<Radio />} label="Cash on Delivery (COD)" />
-                    <FormControlLabel value="Online" control={<Radio disabled />} label="Online Payment (Coming Soon)" />
+                    <FormControlLabel value="STRIPE" control={<Radio />} label="Pay via Stripe" />
+                    <SiStripe size={24} color="#6772e5" style={{ marginLeft: 8 }} />
                   </RadioGroup>
                 </FormControl>
               </Box>
@@ -211,14 +212,14 @@ export default function CheckoutPage() {
                 {items.map((item) => (
                   <Box key={item.id} sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
                     <Typography variant="body2">{item.name} x {item.quantity}</Typography>
-                    <Typography variant="body2">Rs. {item.price * item.quantity}</Typography>
+                    <Typography variant="body2">$AUD {item.price * item.quantity}</Typography>
                   </Box>
                 ))}
               </Box>
               <Divider sx={{ my: 2 }} />
               <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
                 <Typography variant="body1">Subtotal</Typography>
-                <Typography variant="body1">Rs. {getSubtotal()}</Typography>
+                <Typography variant="body1">$AUD {getSubtotal()}</Typography>
               </Box>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
                 <Typography variant="body1">Shipping</Typography>
@@ -227,25 +228,25 @@ export default function CheckoutPage() {
               <Divider sx={{ my: 2 }} />
               <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 3 }}>
                 <Typography variant="h6" fontWeight="bold">Total</Typography>
-                <Typography variant="h6" fontWeight="bold" color="error">Rs. {getSubtotal()}</Typography>
+                <Typography variant="h6" fontWeight="bold" color="error">$AUD {getSubtotal()}</Typography>
               </Box>
 
               {/* Note about minimum order amount */}
               <Box sx={{ mb: 2, p: 1.5, bgcolor: '#f8f9fa', borderRadius: 1, border: '1px dashed #ccc' }}>
                 <Typography variant="caption" color="textSecondary" display="block">
-                  <strong>Note:</strong> The minimum order total must be Rs. 13,300 ($100 USD) to place an order.
+                  <strong>Note:</strong> The minimum order total must be $100 AUD to place an order.
                 </Typography>
               </Box>
 
-              {getSubtotal() < 13300 && (
+              {getSubtotal() < 100 && (
                 <Alert severity="error" sx={{ mb: 2 }}>
-                  Your order total is Rs. {getSubtotal()}, which is less than the minimum required total of Rs. 13,300 ($100 USD). Please add more items to your cart.
+                  Your order total is ${getSubtotal().toFixed(2)}, which is less than the minimum required total of $100 AUD. Please add more items to your cart.
                 </Alert>
               )}
               
               {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
               
-              <Button type="submit" fullWidth variant="contained" size="large" sx={{ py: 1.5, bgcolor: '#233a95', '&:hover': { bgcolor: '#1a2b70' } }} disabled={loading || getSubtotal() < 13300 || addresses.length === 0 || loadingAddresses}>
+              <Button type="submit" fullWidth variant="contained" size="large" sx={{ py: 1.5, bgcolor: '#233a95', '&:hover': { bgcolor: '#1a2b70' } }} disabled={loading || getSubtotal() < 100 || addresses.length === 0 || loadingAddresses}>
                 {loading ? 'Processing...' : 'Place Order'}
               </Button>
             </Paper>

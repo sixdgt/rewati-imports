@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     'core_settings',
 ]
 
+LOGIN_URL = '/admin/login/'
+
 JAZZMIN_SETTINGS = {
     "site_title": "Rewati Imports",
     "site_header": "Rewati Imports",
@@ -154,7 +156,7 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ),
 }
 

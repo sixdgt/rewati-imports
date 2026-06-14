@@ -340,7 +340,7 @@ export default function CustomerDashboard() {
                               <Chip label={order.status} size="small" 
                                 color={order.status === 'Delivered' ? 'success' : order.status === 'Cancelled' ? 'error' : 'primary'} />
                             </TableCell>
-                            <TableCell>Rs. {order.total_amount}</TableCell>
+                            <TableCell>$AUD {order.total_amount}</TableCell>
                             <TableCell align="right">
                               <Button size="small" variant="outlined" onClick={() => setSelectedOrder(order)}>View Details</Button>
                             </TableCell>
@@ -386,7 +386,7 @@ export default function CustomerDashboard() {
                           <img src={item.product_details.images?.[0]?.image || '/products/placeholder.jpg'} alt="" style={{ width: 60, height: 60, objectFit: 'contain' }} />
                           <Box sx={{ ml: 2, flexGrow: 1 }}>
                             <Typography fontWeight="bold">{item.product_details.name}</Typography>
-                            <Typography color="primary">Rs. {item.product_details.price}</Typography>
+                            <Typography color="primary">$AUD {item.product_details.price}</Typography>
                           </Box>
                           <IconButton onClick={() => removeFromWishlist(item.id)} color="error"><IoTrashOutline /></IconButton>
                         </Box>
@@ -489,7 +489,7 @@ export default function CustomerDashboard() {
         {selectedOrder && (
           <>
             <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', bgcolor: '#f8f9fa' }}>
-              <Typography variant="h6" fontWeight="bold">Order Details #{selectedOrder.id}</Typography>
+              <Typography variant="h6" fontWeight="bold" component="span">Order Details #{selectedOrder.id}</Typography>
               <IconButton onClick={() => setSelectedOrder(null)}><IoCloseOutline /></IconButton>
             </DialogTitle>
             <DialogContent dividers>
@@ -522,17 +522,17 @@ export default function CustomerDashboard() {
                     <TableRow key={item.id}>
                       <TableCell>{item.product_name}</TableCell>
                       <TableCell align="center">{item.quantity}</TableCell>
-                      <TableCell align="right">Rs. {item.price}</TableCell>
-                      <TableCell align="right">Rs. {(parseFloat(item.price) * item.quantity).toFixed(2)}</TableCell>
+                      <TableCell align="right">$AUD {item.price}</TableCell>
+                      <TableCell align="right">$AUD {(parseFloat(item.price) * item.quantity).toFixed(2)}</TableCell>
                     </TableRow>
                   ))}
                   <TableRow>
                     <TableCell colSpan={3} align="right"><strong>Shipping</strong></TableCell>
-                    <TableCell align="right">Rs. {selectedOrder.shipping_cost}</TableCell>
+                    <TableCell align="right">$AUD {selectedOrder.shipping_cost}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell colSpan={3} align="right"><Typography variant="h6">Total</Typography></TableCell>
-                    <TableCell align="right"><Typography variant="h6" color="primary">Rs. {selectedOrder.total_amount}</Typography></TableCell>
+                    <TableCell align="right"><Typography variant="h6" color="primary">$AUD {selectedOrder.total_amount}</Typography></TableCell>
                   </TableRow>
                 </TableBody>
               </Table>

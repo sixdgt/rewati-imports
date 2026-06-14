@@ -47,11 +47,11 @@ const Cart: React.FC = () => {
                     <div className='info p-5 border-b border-gray-300 flex flex-col items-start justify-between w-full'>
                         <div className='flex items-center justify-between gap-3 w-full mb-3'>
                             <span className='text-lg font-bold text-gray-800'>Subtotal</span>
-                            <span className='text-lg font-bold text-red-800'>Rs. {getSubtotal()}</span>
+                            <span className='text-lg font-bold text-red-500'>$AUD {getSubtotal()}</span>
                         </div>
                         <div className='flex items-center border-t border-gray-300 justify-between gap-3 w-full mt-5 pt-5'>
                             <span className='text-2xl font-bold text-gray-800'>Total</span>
-                            <span className='text-2xl font-bold text-red-800'>Rs. {getSubtotal()}</span>
+                            <span className='text-2xl font-bold text-red-500'>$AUD {getSubtotal()}</span>
                         </div>  
                         
                         <Button 

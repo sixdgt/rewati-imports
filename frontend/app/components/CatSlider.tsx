@@ -17,7 +17,8 @@ const CatSlider: React.FC = () => {
         const fetchCategories = async () => {
             try {
                 const response = await api.get('/categories/');
-                setCategories(response.data);
+                setCategories(Array.isArray(response.data) ? response.data : []);
+                console.log(response.data);
             } catch (err) {
                 console.error('Failed to fetch categories');
             } finally {
@@ -26,7 +27,7 @@ const CatSlider: React.FC = () => {
         };
         fetchCategories();
     }, []);
-
+    
     if (loading) {
         return (
             <Box sx={{ display: 'flex', justifyContent: 'center', py: 5 }}>

@@ -8,7 +8,8 @@ import { IoTrashOutline, IoCartOutline } from 'react-icons/io5';
 import Link from 'next/link';
 
 export default function WishlistPage() {
-  const { items: wishlist, loading, fetchWishlist, removeItem } = useWishlistStore();
+  const { items: wishlistRaw, loading, fetchWishlist, removeItem } = useWishlistStore();
+  const wishlist = Array.isArray(wishlistRaw) ? wishlistRaw : [];
   const addItem = useCartStore((state) => state.addItem);
 
   useEffect(() => {

@@ -51,8 +51,8 @@ const CartItems: React.FC<CartItemProps> = ({ item }) => {
                     </div>
 
                     <div className='flex items-center gap-3'>
-                        <span className='text-lg font-bold text-red-800'>Rs. {item.price}</span>
-                        <span className='text-md font-semibold text-gray-500'>Subtotal: Rs. {item.price * item.quantity}</span>
+                        <span className='text-lg font-bold text-red-500'>$AUD {item.price}</span>
+                        <span className='text-md font-semibold text-gray-500'>Subtotal: $AUD {item.price * item.quantity}</span>
                     </div>
                 </div>
             </div>

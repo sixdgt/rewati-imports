@@ -42,7 +42,6 @@
 <div class="col-12">
     <!-- Header with Live Clock -->
     <div class="d-flex justify-content-between align-items-center mb-4 px-4">
-        <h2 class="mb-0">Dashboard</h2>
         <div id="liveClock" class="text-muted fw-bold" style="font-size: 1.1rem; background: #fff; padding: 5px 15px; border-radius: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
             <!-- Populated via JS -->
         </div>
@@ -63,7 +62,7 @@
         <div class="col-md-3 mb-4">
             <div class="card text-white bg-success p-3 dashboard-card h-100">
                 <h5>Total Revenue</h5>
-                <h3 class="mb-0">Rs. {{ total_revenue }}</h3>
+                <h3 class="mb-0">$AUD {{ total_revenue }}</h3>
             </div>
         </div>
 
@@ -282,7 +281,7 @@
             data: {
                 labels: labels,
                 datasets: [{
-                    label: 'Revenue (Rs)',
+                    label: 'Revenue $AUD',
                     data: {{ revenue_data|safe }},
                     backgroundColor: 'rgba(40, 167, 69, 0.7)',
                     borderColor: 'rgba(40, 167, 69, 1)',

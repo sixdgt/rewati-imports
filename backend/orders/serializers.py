@@ -41,7 +41,7 @@ class OrderSerializer(serializers.ModelSerializer):
                 {"address": "The shipping address must match one of your saved profile addresses."}
             )
             
-        # 3. Check if the total price of items is at least $100 equivalent (Rs. 13,300)
+        # 3. Check if the total price of items is at least $AUD 100 equivalent
         order_items_data = attrs.get('order_items')
         if not order_items_data:
             raise serializers.ValidationError("An order must contain at least one item.")
@@ -56,10 +56,10 @@ class OrderSerializer(serializers.ModelSerializer):
             except Product.DoesNotExist:
                 raise serializers.ValidationError(f"Product with ID {product_id} does not exist.")
                 
-        MIN_ORDER_AMOUNT = 13300 # $100 USD equivalent in NPR
+        MIN_ORDER_AMOUNT = 100 # $AUD 100
         if total_amount < MIN_ORDER_AMOUNT:
             raise serializers.ValidationError(
-                f"The minimum total order amount must be Rs. {MIN_ORDER_AMOUNT} (equivalent to $100 USD). Your total is Rs. {total_amount}."
+                f"The minimum total order amount must be $AUD {MIN_ORDER_AMOUNT}. Your total is $AUD {total_amount}."
             )
             
         return attrs

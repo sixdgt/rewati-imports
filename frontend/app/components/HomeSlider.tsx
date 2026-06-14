@@ -10,7 +10,8 @@ import Link from 'next/link';
 
 const HomeSlider: React.FC = () => {
     const { ads } = useSettingsStore();
-    const topAds = ads.filter(ad => ad.position === 'home_top');
+    const safeAds = Array.isArray(ads) ? ads : [];
+    const topAds = safeAds.filter(ad => ad.position === 'home_top');
 
     if (topAds.length === 0) {
         return (

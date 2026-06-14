@@ -48,12 +48,12 @@ const ProductItem: React.FC<Props> = ({ product }) => {
                 <div className='mt-auto'>
                     <div className='flex items-center gap-2 mb-3'>
                         <span className='text-lg font-bold text-red-600'>
-                            AUD {product.price}
+                            $AUD {product.price}
                         </span>
 
                         {product.old_price && (
                             <span className='text-sm text-gray-400 line-through'>
-                                Rs. {product.old_price}
+                                $AUD {product.old_price}
                             </span>
                         )}
                     </div>

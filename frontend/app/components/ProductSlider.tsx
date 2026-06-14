@@ -18,7 +18,7 @@ const ProductSlider: React.FC = () => {
         const fetchProducts = async () => {
             try {
                 const response = await api.get('/products/');
-                setProducts(response.data);
+                setProducts(Array.isArray(response.data) ? response.data : []);
             } catch (err) {
                 console.error('Failed to fetch products');
             } finally {

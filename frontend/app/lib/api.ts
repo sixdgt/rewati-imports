@@ -8,6 +8,15 @@ const api = axios.create({
   },
 });
 
+const LIST_ENDPOINTS = [
+  '/categories/',
+  '/products/',
+  '/wishlist/',
+  '/settings/ads/',
+  '/orders/',
+  '/reviews/',
+];
+
 // Request interceptor to add the access token
 api.interceptors.request.use(
   (config) => {
@@ -22,7 +31,29 @@ api.interceptors.request.use(
 
 // Response interceptor to handle token refresh
 api.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    const contentType = response.headers['content-type'] || '';
+    if (contentType.includes('text/html')) {
+      console.error(`[API] ${response.config.url} returned HTML — check Django auth/permissions`);
+      return Promise.reject(new Error('Received HTML instead of JSON. Possible auth redirect.'));
+    }
+    
+    console.log(`[API] ${response.config.url}`, response.data);
+    const url = response.config.url || '';
+    const isListEndpoint = LIST_ENDPOINTS.some(endpoint => url.includes(endpoint));
+    
+    if (isListEndpoint) {
+      const data = response.data;
+      if (data && typeof data === 'object' && !Array.isArray(data)) {
+        const arrayValue = Object.values(data).find(val => Array.isArray(val));
+        if (arrayValue) {
+          response.data = arrayValue;
+        }
+      }
+    }
+
+    return response;
+  },
   async (error) => {
     const originalRequest = error.config;
     if (error.response?.status === 401 && !originalRequest._retry) {

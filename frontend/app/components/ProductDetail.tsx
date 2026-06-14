@@ -104,8 +104,8 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
 
                     <div className='flex items-center gap-4'>
                         <div className='flex items-center justify-between gap-3 my-3'>
-                            <span className='text-2xl font-bold text-red-600'>Rs. {product.price}</span>
-                            {product.old_price && <span className='text-lg font-bold text-gray-400 line-through'>Rs. {product.old_price}</span>}
+                            <span className='text-2xl font-bold text-red-600'>$AUD {product.price}</span>
+                            {product.old_price && <span className='text-lg font-bold text-gray-400 line-through'>$AUD {product.old_price}</span>}
                         </div>
                         <p className='text-sm text-gray-600'>
                             Stock: <span className={`font-bold ${product.stock > 0 ? 'text-green-600' : 'text-red-600'}`}>{product.stock > 0 ? `${product.stock} Items` : 'Out of Stock'}</span>
