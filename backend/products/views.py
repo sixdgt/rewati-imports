@@ -1,9 +1,14 @@
 from rest_framework import viewsets, permissions, filters
-from .models import Category, Product, Wishlist, Review
-from .serializers import CategorySerializer, ProductSerializer, WishlistSerializer, ReviewSerializer
+from .models import Category, Product, ProductImage, Wishlist, Review
+from .serializers import CategorySerializer, ProductImageSerializer, ProductSerializer, WishlistSerializer, ReviewSerializer
 from rest_framework.exceptions import ValidationError
 from orders.models import Order
 
+class ProductImageViewSet(viewsets.ModelViewSet):
+    queryset = ProductImage.objects.all()
+    serializer_class = ProductImageSerializer
+    permission_classes = [permissions.IsAdminUser]
+    
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
