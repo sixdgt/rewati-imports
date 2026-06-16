@@ -32,8 +32,8 @@ api.interceptors.request.use(
 // Response interceptor to handle token refresh
 api.interceptors.response.use(
   (response) => {
-    const contentType = response.headers['content-type'] || '';
-    if (contentType.includes('text/html')) {
+    const contentType = response.headers['content-type'];
+    if (typeof contentType === 'string' && contentType.includes('text/html')) {
       console.error(`[API] ${response.config.url} returned HTML — check Django auth/permissions`);
       return Promise.reject(new Error('Received HTML instead of JSON. Possible auth redirect.'));
     }
