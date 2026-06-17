@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import Cookies from 'js-cookie';
-import api from '../lib/api';
+import api from '@/app/lib/api';
 
 interface User {
   id: number;
@@ -27,8 +27,16 @@ export const useAuthStore = create<AuthState>((set) => ({
   isLoading: false,
 
   login: async (access: string, refresh: string) => {
-    Cookies.set('access_token', access);
-    Cookies.set('refresh_token', refresh);
+    Cookies.set('access_token', access, {
+      secure: true,
+      sameSite: 'Strict',
+    });
+
+    Cookies.set('refresh_token', refresh, {
+      secure: true,
+      sameSite: 'Strict',
+    });
+
     set({ isAuthenticated: true });
     await useAuthStore.getState().fetchProfile();
   },
@@ -37,7 +45,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     Cookies.remove('access_token');
     Cookies.remove('refresh_token');
     set({ user: null, isAuthenticated: false });
-    window.location.href = '/login';
+    window.location.replace('/login');
   },
 
   fetchProfile: async () => {
