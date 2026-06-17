@@ -9,8 +9,6 @@ services:
       - ./backend/.env
     expose:
       - "8000"
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
 
   frontend:
     build: ./frontend

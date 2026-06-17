@@ -182,6 +182,10 @@ SIMPLE_JWT = {
 # CORS settings
 CORS_ALLOW_ALL_ORIGINS = True # Change this in production
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+USE_X_FORWARDED_HOST = True
+
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
