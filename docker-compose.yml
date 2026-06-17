@@ -5,6 +5,8 @@ services:
     build: ./backend
     container_name: django_app
     restart: always
+    ports:
+      - "8000:8000"
     env_file:
       - ./backend/.env
     expose:
@@ -14,6 +16,8 @@ services:
     build: ./frontend
     container_name: nextjs_app
     restart: always
+    ports:
+      - "3000:3000"
     env_file:
       - ./frontend/.env.local
     expose:
