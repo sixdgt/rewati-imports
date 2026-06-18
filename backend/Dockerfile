@@ -5,7 +5,6 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
-# Install dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
     libpq-dev \
@@ -17,8 +16,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-# Collect static files (optional if using nginx)
-RUN python manage.py collectstatic --noinput || true
+# Collect static files - MUST happen after copying everything
+RUN python manage.py collectstatic --noinput
 
 EXPOSE 8000
 
