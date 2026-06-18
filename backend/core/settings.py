@@ -228,8 +228,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # for storages and cloudflare r2
-# Cloudflare R2 Storage Configuration
-# Cloudflare R2 Storage Configuration
 if not DEBUG:
     STORAGES = {
         'default': {
@@ -247,14 +245,12 @@ if not DEBUG:
         }
     }
     
-    # R2 Configuration
-    AWS_S3_CUSTOM_DOMAIN = env('R2_PUBLIC_URL').rstrip('/')
+    # Force R2 CDN URL for all media
+    AWS_S3_CUSTOM_DOMAIN = 'cdn.rewatiimports.com.au'
     AWS_QUERYSTRING_AUTH = False
-    MEDIA_URL = env('R2_PUBLIC_URL').rstrip('/') + '/media/'
+    MEDIA_URL = 'https://cdn.rewatiimports.com.au/media/'
 else:
-    # Development
     MEDIA_URL = '/media/'
-    MEDIA_ROOT = BASE_DIR / 'media'
 
 AWS_ACCESS_KEY_ID = env("R2_ACCESS_KEY")
 AWS_SECRET_ACCESS_KEY = env("R2_SECRET_KEY")

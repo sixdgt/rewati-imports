@@ -2,10 +2,14 @@ from rest_framework import serializers
 from .models import Category, Product, ProductImage, Wishlist, Review
 
 class ProductImageSerializer(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField()
     class Meta:
         model = ProductImage
         fields = ('id', 'image', 'is_feature')
-
+    def get_image(self, obj):
+        if obj.image:
+            return obj.image.url  # This returns absolute URL if R2 is configured
+        return None
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
