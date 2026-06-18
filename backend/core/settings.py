@@ -30,7 +30,13 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG')
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
+ALLOWED_HOSTS = [
+    "api.rewatiimports.com.au",
+    "www.rewatiimports.com.au",
+    "rewatiimports.com.au",
+    "127.0.0.1",
+    "localhost",
+]
 
 
 # Application definition
@@ -182,7 +188,18 @@ SIMPLE_JWT = {
 # CORS settings
 CORS_ALLOW_ALL_ORIGINS = True # Change this in production
 
+# Trust Cloudflare's X-Forwarded headers
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Session security for HTTPS
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://rewatiimports.com.au',
+    'https://www.rewatiimports.com.au',
+    'https://api.rewatiimports.com.au',
+]
 
 USE_X_FORWARDED_HOST = True
 
