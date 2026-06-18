@@ -11,6 +11,8 @@ services:
       - ./backend/.env
     expose:
       - "8000"
+    volumes:
+      - ./backend/staticfiles:/app/staticfiles  # Add this
     command: >
       sh -c "python manage.py collectstatic --noinput --no-input || true &&
              gunicorn core.wsgi:application --bind 0.0.0.0:8000 --workers 3"
