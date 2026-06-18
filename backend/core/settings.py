@@ -201,7 +201,7 @@ CSRF_TRUSTED_ORIGINS = [
     'https://api.rewatiimports.com.au',
 ]
 
-USE_X_FORWARDED_HOST = True
+USE_X_FORWARDED_HOST = False
 
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
