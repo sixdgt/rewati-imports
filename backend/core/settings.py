@@ -228,7 +228,32 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # for storages and cloudflare r2
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# Cloudflare R2 Storage Configuration
+if not DEBUG:
+    STORAGES = {
+        'default': {
+            'BACKEND': 'storages.backends.s3boto3.S3Boto3Storage',
+            'OPTIONS': {
+                'access_key': env('R2_ACCESS_KEY'),
+                'secret_key': env('R2_SECRET_KEY'),
+                'storage_bucket_name': env('R2_BUCKET_NAME'),
+                'endpoint_url': env('R2_ENDPOINT'),
+                'region_name': 'auto',
+            }
+        },
+        'staticfiles': {
+            'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage',
+        }
+    }
+    
+    # Absolute URL for media files
+    MEDIA_URL = env('R2_PUBLIC_URL').rstrip('/') + '/media/'
+    AWS_S3_CUSTOM_DOMAIN = env('R2_PUBLIC_URL').rstrip('/')
+    AWS_QUERYSTRING_AUTH = False
+else:
+    # Development: use local storage
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = BASE_DIR / 'media'
 
 AWS_ACCESS_KEY_ID = env("R2_ACCESS_KEY")
 AWS_SECRET_ACCESS_KEY = env("R2_SECRET_KEY")
