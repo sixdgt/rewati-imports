@@ -246,7 +246,7 @@ if not DEBUG:
         }
     }
     
-    AWS_S3_CUSTOM_DOMAIN = 'cdn.rewatiimports.com.au'
+    AWS_S3_CUSTOM_DOMAIN = 'https://cdn.rewatiimports.com.au'
     AWS_QUERYSTRING_AUTH = False
     MEDIA_URL = '/media/'
     MEDIA_ROOT = BASE_DIR / 'media'
