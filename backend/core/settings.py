@@ -229,6 +229,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # for storages and cloudflare r2
 # Cloudflare R2 Storage Configuration
+# Cloudflare R2 Storage Configuration
 if not DEBUG:
     STORAGES = {
         'default': {
@@ -246,12 +247,12 @@ if not DEBUG:
         }
     }
     
-    # Absolute URL for media files
-    MEDIA_URL = env('R2_PUBLIC_URL').rstrip('/') + '/media/'
+    # R2 Configuration
     AWS_S3_CUSTOM_DOMAIN = env('R2_PUBLIC_URL').rstrip('/')
     AWS_QUERYSTRING_AUTH = False
+    MEDIA_URL = env('R2_PUBLIC_URL').rstrip('/') + '/media/'
 else:
-    # Development: use local storage
+    # Development
     MEDIA_URL = '/media/'
     MEDIA_ROOT = BASE_DIR / 'media'
 
