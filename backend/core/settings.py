@@ -222,13 +222,14 @@ STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
-MEDIA_URL = 'media/'
-MEDIA_ROOT = BASE_DIR / 'media'
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # for storages and cloudflare r2
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Media & Storage Configuration
 if not DEBUG:
+    # Production: Use Cloudflare R2
     STORAGES = {
         'default': {
             'BACKEND': 'storages.backends.s3boto3.S3Boto3Storage',
@@ -245,17 +246,11 @@ if not DEBUG:
         }
     }
     
-    # Force R2 CDN URL for all media
     AWS_S3_CUSTOM_DOMAIN = 'cdn.rewatiimports.com.au'
     AWS_QUERYSTRING_AUTH = False
-    MEDIA_URL = 'https://cdn.rewatiimports.com.au/media/'
-else:
     MEDIA_URL = '/media/'
-
-AWS_ACCESS_KEY_ID = env("R2_ACCESS_KEY")
-AWS_SECRET_ACCESS_KEY = env("R2_SECRET_KEY")
-AWS_STORAGE_BUCKET_NAME = env("R2_BUCKET_NAME")
-AWS_S3_ENDPOINT_URL = env("R2_ENDPOINT")
-
-AWS_QUERYSTRING_AUTH = False
-AWS_S3_CUSTOM_DOMAIN = env("R2_PUBLIC_URL")
+    MEDIA_ROOT = BASE_DIR / 'media'
+else:
+    # Development: Use local storage
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = BASE_DIR / 'media'
