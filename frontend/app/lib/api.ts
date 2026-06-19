@@ -1,13 +1,13 @@
 import axios from 'axios';
+import { cookies } from 'next/headers';
 import Cookies from 'js-cookie';
 
-export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api";
+const API_BASE_URL = typeof window === 'undefined'
+  ? process.env.INTERNAL_API_URL || 'http://127.0.0.1:8000/api'
+  : process.env.NEXT_PUBLIC_API_URL || '/api';
 
 const api = axios.create({
-  baseURL: `${API_BASE_URL}`,
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  baseURL: `${API_BASE_URL}/`,
 });
 
 const LIST_ENDPOINTS = [
@@ -21,8 +21,14 @@ const LIST_ENDPOINTS = [
 
 // Request interceptor to add the access token
 api.interceptors.request.use(
-  (config) => {
-    const token = Cookies.get('access_token');
+  async (config) => {
+    let token: string | undefined;
+    if (typeof window === 'undefined') {
+      const cookieStore = await cookies();
+      token = cookieStore.get('access_token')?.value;
+    } else {
+      token = Cookies.get('access_token');
+    }
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -72,10 +78,11 @@ api.interceptors.response.use(
           return api(originalRequest);
         }
       } catch (refreshError) {
-        // If refresh fails, logout user
         Cookies.remove('access_token');
         Cookies.remove('refresh_token');
-        window.location.href = '/login';
+        if (typeof window !== 'undefined') {
+          window.location.href = '/login';
+        }
         return Promise.reject(refreshError);
       }
     }
