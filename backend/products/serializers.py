@@ -11,9 +11,14 @@ class ProductImageSerializer(serializers.ModelSerializer):
             return obj.image.url  # This returns absolute URL if R2 is configured
         return None
 class CategorySerializer(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField()
     class Meta:
         model = Category
         fields = ('id', 'name', 'slug', 'image', 'description')
+    def get_image(self, obj):
+        if obj.image:
+            return obj.image.url  # This returns absolute URL if R2 is configured
+        return None
 
 class ProductSerializer(serializers.ModelSerializer):
     category = CategorySerializer(read_only=True)
