@@ -9,7 +9,7 @@ import {
   InputAdornment, LinearProgress, Skeleton, TablePagination
 } from '@mui/material';
 import { useAuthStore } from '../../store/useAuthStore';
-import api from '../../lib/api';
+import api from '@/app/lib/api-client';
 import { 
   IoHeartOutline, IoTrashOutline, IoLocationOutline, IoPersonOutline, 
   IoBagHandleOutline, IoLockClosedOutline, IoEyeOutline, IoEyeOffOutline,

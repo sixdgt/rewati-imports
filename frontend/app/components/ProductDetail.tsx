@@ -11,7 +11,7 @@ import { TextField, Box, Typography, Divider, Avatar, Alert, CircularProgress, G
 import { useCartStore } from '../store/useCartStore';
 import { useAuthStore } from '../store/useAuthStore';
 import { useWishlistStore } from '../store/useWishlistStore';
-import api from '../lib/api';
+import api from '@/app/lib/api-client';
 
 interface ProductDetailProps {
     product: any;

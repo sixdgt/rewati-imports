@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Container, Typography, Box, Paper, Table, TableBody, TableCell, TableHead, TableRow, Tabs, Tab, Chip, CircularProgress, Alert } from '@mui/material';
-import api from '../../../lib/api';
+import api from '@/app/lib/api-client';
 
 export default function AdminUserManagement() {
   const [users, setUsers] = useState<any[]>([]);

@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import api from '@/app/lib/api';
+import api from '@/app/lib/api-client';
 
 interface SettingsState {
   settings: any;

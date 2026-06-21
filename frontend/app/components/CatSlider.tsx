@@ -6,7 +6,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import { Navigation } from 'swiper/modules';
 import { FaArrowRightLong } from "react-icons/fa6";
-import api from '../lib/api';
+import api from '@/app/lib/api-client';
 import { Box, CircularProgress } from '@mui/material';
 
 const CatSlider: React.FC = () => {

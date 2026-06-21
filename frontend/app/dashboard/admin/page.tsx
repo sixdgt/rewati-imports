@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Grid, Paper, Typography, Box, Table, TableBody, TableCell, TableHead, TableRow, Button } from '@mui/material';
 import { useAuthStore } from '../../store/useAuthStore';
-import api from '../../lib/api';
+import api from '@/app/lib/api-client';
 import { useRouter } from 'next/navigation';
 
 export default function AdminDashboard() {

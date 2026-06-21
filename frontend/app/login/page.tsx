@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Container, Box, Typography, TextField, Button, Paper, Link, Alert } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import api from '../lib/api';
+import api from '@/app/lib/api-client';
 import { useAuthStore } from '../store/useAuthStore';
 
 export default function LoginPage() {

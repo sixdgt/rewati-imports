@@ -7,7 +7,7 @@ import { Button, CircularProgress, Box, Typography } from '@mui/material';
 import ProductItem from '../components/ProductItem';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
-import api from '../lib/api';
+import api from '@/app/lib/api-client';
 import { useSearchParams, useRouter } from 'next/navigation';
 
 const ProductPageInner: React.FC = () => {

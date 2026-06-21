@@ -3,7 +3,7 @@
 import ProductDetail from '@/app/components/ProductDetail';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import api from '@/app/lib/api';
+import api from '@/app/lib/api-client';
 import { Container, Typography, CircularProgress, Box } from '@mui/material';
 
 const ProductDetailPage: React.FC = () => {

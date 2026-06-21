@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import api from '@/app/lib/api';
+import api from '@/app/lib/api-client';
 
 interface WishlistState {
   items: any[];

@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Typography, Box, Paper, Table, TableBody, TableCell, TableHead, TableRow, Button, IconButton, CircularProgress, Alert } from '@mui/material';
 import { IoAddOutline, IoPencilOutline, IoTrashOutline } from 'react-icons/io5';
-import api from '../../../lib/api';
+import api from '@/app/lib/api-client';
 import Link from 'next/link';
 
 export default function AdminProductList() {

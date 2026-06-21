@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Grid, Paper, Typography, Box, TextField, Button, Divider, Alert, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, InputLabel, Select, MenuItem } from '@mui/material';
 import { useCartStore } from '../store/useCartStore';
 import { useAuthStore } from '../store/useAuthStore';
-import api from '../lib/api';
+import api from '@/app/lib/api-client';
 import { useRouter } from 'next/navigation';
 import { SiStripe } from 'react-icons/si';
 

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Container, Typography, Box, Paper, Table, TableBody, TableCell, TableHead, TableRow, Select, MenuItem, Chip, CircularProgress, Alert } from '@mui/material';
-import api from '../../../lib/api';
+import api from '@/app/lib/api-client';
 
 const statusColors: any = {
   Pending: 'warning',

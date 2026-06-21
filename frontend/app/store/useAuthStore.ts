@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import Cookies from 'js-cookie';
-import api from '@/app/lib/api';
+import api from '@/app/lib/api-client';
 
 interface User {
   id: number;

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Container, Typography, Box, Paper, TextField, Button, Grid, MenuItem, Alert, CircularProgress } from '@mui/material';
-import api from '../../../../lib/api';
+import api from '@/app/lib/api-client';
 import { useRouter } from 'next/navigation';
 
 export default function AddProductPage() {

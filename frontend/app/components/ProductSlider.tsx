@@ -7,7 +7,7 @@ import 'swiper/css/navigation';
 
 import { Navigation } from 'swiper/modules';
 import ProductItem from './ProductItem';
-import api from '../lib/api';
+import api from '@/app/lib/api-client';
 import { Box, CircularProgress } from '@mui/material';
 
 const ProductSlider: React.FC = () => {
