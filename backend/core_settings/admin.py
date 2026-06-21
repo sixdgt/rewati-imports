@@ -77,8 +77,6 @@ class CustomAdminSite(admin.AdminSite):
 
         return super().index(request, extra_context)
 
-
-@admin.register(WebsiteSettings)
 class WebsiteSettingsAdmin(admin.ModelAdmin):
     def has_add_permission(self, request):
         # Only allow one instance of settings
@@ -86,8 +84,10 @@ class WebsiteSettingsAdmin(admin.ModelAdmin):
             return False
         return super().has_add_permission(request)
 
-@admin.register(Advertisement)
 class AdvertisementAdmin(admin.ModelAdmin):
     list_display = ('title', 'position', 'is_active', 'created_at')
     list_filter = ('position', 'is_active')
     search_fields = ('title',)
+
+admin.site.register(WebsiteSettings, WebsiteSettingsAdmin)
+admin.site.register(Advertisement, AdvertisementAdmin)
