@@ -1,6 +1,4 @@
 from django.contrib import admin
-
-from backend.core_settings.models import Advertisement, WebsiteSettings
 from .models import Category, Product, ProductImage, Wishlist, Review
 from django.utils.html import format_html
 
@@ -38,18 +36,3 @@ class ProductAdmin(admin.ModelAdmin):
         if image:
             return format_html('<img src="{}" width="50" height="50" />', image.image.url)
         return "No Image"
-
-@admin.register(WebsiteSettings)
-class WebsiteSettingsAdmin(admin.ModelAdmin):
-    def has_add_permission(self, request):
-        # Only allow one instance of settings
-        if self.model.objects.count() >= 1:
-            return False
-        return super().has_add_permission(request)
-
-@admin.register(Advertisement)
-class AdvertisementAdmin(admin.ModelAdmin):
-    list_display = ('title', 'position', 'is_active', 'created_at')
-    list_filter = ('position', 'is_active')
-    search_fields = ('title',)
- 
