@@ -1,5 +1,4 @@
 from django.contrib import admin
-from .models import WebsiteSettings, Advertisement
 import json
 from django.utils.timezone import now, timedelta
 from django.db.models import Sum, Count
@@ -77,17 +76,3 @@ class CustomAdminSite(admin.AdminSite):
 
         return super().index(request, extra_context)
 
-class WebsiteSettingsAdmin(admin.ModelAdmin):
-    def has_add_permission(self, request):
-        # Only allow one instance of settings
-        if self.model.objects.count() >= 1:
-            return False
-        return super().has_add_permission(request)
-
-class AdvertisementAdmin(admin.ModelAdmin):
-    list_display = ('title', 'position', 'is_active', 'created_at')
-    list_filter = ('position', 'is_active')
-    search_fields = ('title',)
-
-admin.site.register(WebsiteSettings, WebsiteSettingsAdmin)
-admin.site.register(Advertisement, AdvertisementAdmin)
