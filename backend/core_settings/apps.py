@@ -11,4 +11,4 @@ class CoreSettingsConfig(AppConfig):
         
 class CustomAdminConfig(django.contrib.admin.apps.AdminConfig):
     default = False
-    default_site = 'core_settings.admin.CustomAdminSite'
+    default_site = 'core_settings.admin_site.CustomAdminSite'
