@@ -228,6 +228,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Media & Storage Configuration
+# Media & Storage Configuration
 if not DEBUG:
     # Production: Use Cloudflare R2
     STORAGES = {
@@ -236,18 +237,18 @@ if not DEBUG:
             'OPTIONS': {
                 'access_key': env('R2_ACCESS_KEY'),
                 'secret_key': env('R2_SECRET_KEY'),
-                'storage_bucket_name': env('R2_BUCKET_NAME'),
+                'bucket_name': env('R2_BUCKET_NAME'),
                 'endpoint_url': env('R2_ENDPOINT'),
                 'region_name': 'auto',
+                'custom_domain': 'cdn.rewatiimports.com.au',
+                'querystring_auth': False,
             }
         },
         'staticfiles': {
             'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage',
         }
     }
-    
-    AWS_S3_CUSTOM_DOMAIN = 'cdn.rewatiimports.com.au'
-    AWS_QUERYSTRING_AUTH = False
+
     MEDIA_URL = '/media/'
     MEDIA_ROOT = BASE_DIR / 'media'
 else:
